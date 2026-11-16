@@ -3,6 +3,7 @@ const path = require('node:path');
 const { ComciganProvider } = require('./services/comcigan-provider');
 
 const provider = new ComciganProvider();
+const iconPath = path.join(__dirname, '..', 'assets', 'icon.ico');
 
 function createWindow() {
   const window = new BrowserWindow({
@@ -11,6 +12,7 @@ function createWindow() {
     minWidth: 760,
     minHeight: 580,
     backgroundColor: '#f8fafc',
+    icon: iconPath,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -22,6 +24,8 @@ function createWindow() {
   window.removeMenu();
   window.loadFile(path.join(__dirname, 'renderer', 'index.html'));
 }
+
+app.setName('SchoolTime');
 
 app.whenReady().then(() => {
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {

@@ -3,6 +3,11 @@ $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
 Set-Location -LiteralPath $projectRoot
 
+& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $projectRoot 'scripts/generate-icon.ps1')
+if ($LASTEXITCODE -ne 0) {
+    throw "Icon generation failed with exit code $LASTEXITCODE."
+}
+
 # Remove only project-local generated directories. Dependencies and source files are preserved.
 $generatedDirectories = @('dist', 'release', 'build', 'tmp', '.electron-builder')
 foreach ($directory in $generatedDirectories) {

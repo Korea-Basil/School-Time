@@ -1,7 +1,7 @@
 {
   "name": "schooltime",
   "version": "0.1.0",
-  "description": "A lightweight, secure Comcigan-style Korean school timetable desktop app.",
+  "description": "SchoolTime",
   "main": "src/main.js",
   "type": "commonjs",
   "scripts": {
@@ -10,6 +10,7 @@
     "dist": "electron-builder --win nsis --publish never",
     "build:clean": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-clean.ps1",
     "pack": "electron-builder --dir",
+    "generate:icon": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/generate-icon.ps1",
     "lint": "node --check src/main.js && node --check src/preload.js && node --check src/services/comcigan-provider.js && node --check src/renderer/app.js"
   },
   "author": "SchoolTime contributors",
@@ -28,9 +29,12 @@
     "compression": "maximum",
     "files": [
       "src/**/*",
+      "assets/**/*",
       "package.json"
     ],
     "win": {
+      "executableName": "SchoolTime",
+      "icon": "assets/icon.ico",
       "target": [
         {
           "target": "nsis",
@@ -42,6 +46,8 @@
       "artifactName": "SchoolTime-${version}-Setup.exe"
     },
     "nsis": {
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "perMachine": false
